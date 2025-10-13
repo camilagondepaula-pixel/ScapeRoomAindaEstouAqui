@@ -1,27 +1,43 @@
 body {
   margin: 0;
   padding: 0;
-  background: url('assets/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #ddd;
-  font-family: 'Special Elite', cursive;
-  cursor: url('assets/cursor.png'), auto;
+  background-color: #8b0000;
+  color: #fff;
+  font-family: 'Special Elite', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+.container {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px black;
 }
 
-.blink { animation: blink 1s infinite; }
-
-@keyframes glitch {
-  0% { clip-path: inset(0 0 0 0); }
-  50% { clip-path: inset(10% 0 10% 0); }
-  100% { clip-path: inset(0 0 0 0); }
+input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 60%;
 }
 
-.glitch {
-  animation: glitch 0.5s infinite;
-  text-shadow: 2px 2px red, -2px -2px blue;
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
 }
