@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Erro…</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { animation: glitchBg 0.3s infinite; }
+    @keyframes glitchBg {
+      0% { background-position: 0 0; }
+      50% { background-position: 10px 10px; }
+      100% { background-position: 0 0; }
+    }
+    .glitch-text {
+      font-size: 2em;
+      text-align: center;
+      margin-top: 20vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="glitch-text glitch">S A I …</div>
+  <div class="glitch-text glitch">E s c a p e …</div>
+  <div class="glitch-text glitch">N u n c a …</div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = 'end.html';
+    }, 10000);
+  </script>
+</body>
+</html>

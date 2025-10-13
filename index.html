@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Não Feche Essa Aba</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="intro">
+    <p id="typedText">Olá... você ainda está aí?</p>
+    <p id="welcome"></p>
+    <input type="text" id="playerName" placeholder="Seu nome">
+    <button onclick="enterGame()">Entrar</button>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    const savedName = localStorage.getItem('playerName');
+    if (savedName) {
+      document.getElementById('welcome').innerText = `Você voltou mesmo, ${savedName}? Achei que tivesse aprendido.`;
+    } else {
+      document.getElementById('welcome').innerText = "Digite seu nome para continuar.";
+    }
+  </script>
+</body>
+</html>

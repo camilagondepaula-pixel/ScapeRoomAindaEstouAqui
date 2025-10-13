@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Sala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="assets/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <p id="dialogue"></p>
+
+  <script src="script.js"></script>
+  <script>
+    const name = localStorage.getItem('playerName');
+    const lines = [
+      `Prazer, ${name}.`,
+      'Está sozinha agora?',
+      'A câmera parece desligada… mas eu ainda posso ver você.',
+      'Não olhe pra trás.'
+    ];
+    let i = 0;
+    function showLines() {
+      if (i < lines.length) {
+        typeWriter(lines[i], 'dialogue');
+        i++;
+        setTimeout(showLines, 4000);
+      } else {
+        setTimeout(() => window.location.href = 'glitch.html', 6000);
+      }
+    }
+    showLines();
+    dynamicTitle(['Você ainda está aí?', 'Não saia…']);
+  </script>
+</body>
+</html>

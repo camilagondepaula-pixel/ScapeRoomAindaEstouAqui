@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Você escapou</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio autoplay>
+    <source src="assets/breath.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="finalMessage">Parabéns, [nome]. Você escapou.</div>
+  <div id="locationMessage" style="text-align:center; margin-top:20px;"></div>
+  <button onclick="restart()">Recomeçar?</button>
+
+  <script>
+    const name = localStorage.getItem('playerName');
+    document.getElementById('finalMessage').innerText = `Parabéns, ${name}. Você escapou.`;
+
+    setTimeout(() => {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        const lat = pos.coords.latitude.toFixed(3);
+        const lon = pos.coords.longitude.toFixed(3);
+        document.getElementById('locationMessage').innerText =
+          `Mas algo ficou do outro lado... em ${lat}, ${lon}.`;
+      }, function() {
+        document.getElementById('locationMessage').innerText =
+          'Mas algo ficou do outro lado... e ele sabe onde te encontrar.';
+      });
+    }, 2000);
+
+    function restart() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
