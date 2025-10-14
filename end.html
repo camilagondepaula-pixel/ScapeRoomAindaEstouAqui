@@ -8,24 +8,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Tela inicial com botão -->
+  <!-- Tela inicial -->
   <div class="container" id="dialogue">
-    <p id="message">Você quer sair?</p>
-    <button onclick="handleClick()">Sair</button>
+    <p id="message"></p>
+    <button id="exitBtn" onclick="handleClick()" style="display:none;">Sair</button>
   </div>
 
-  <!-- Tela de alerta de vírus -->
+  <!-- Tela de alerta -->
   <div class="alerta" id="alerta" style="display: none;">
-    <h1>⚠️ Alerta de Vírus ⚠️</h1>
-    <p>Seu celular pode estar sendo rastreado ou invadido</p>
+    <h1 id="alertTitle"></h1>
+    <p id="alertText"></p>
   </div>
 
   <!-- Cena do susto -->
   <div class="scare" id="scare" style="display: none;">
-    <!-- SUA IMAGEM DE SUSTO -->
     <img src="Copilot_20251014_160904.jpg.png" alt="Susto" />
-
-    <!-- SEU ÁUDIO DE SUSTO -->
     <audio id="screamSound">
       <source src="assets/audio/scary-scream-3-81274.mp3" type="audio/mpeg">
     </audio>
@@ -34,17 +31,32 @@
   <script>
     let clickCount = 0;
     const messages = [
+      "Você quer sair?",
       "Tem certeza que quer sair?",
       "Você ainda está aí...",
       "Última chance..."
     ];
 
+    // Função de digitação
+    function typeWriter(text, elementId, callback, speed = 50) {
+      let i = 0;
+      document.getElementById(elementId).innerHTML = "";
+      function typing() {
+        if (i < text.length) {
+          document.getElementById(elementId).innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+      typing();
+    }
+
     // Mostra alerta de vírus
     function showAlert() {
       document.getElementById("dialogue").style.display = "none";
       document.getElementById("alerta").style.display = "block";
-
-      // Piscar a tela em vermelho
       document.body.classList.add("flash");
 
       // Vibrar no celular
@@ -52,40 +64,48 @@
         navigator.vibrate([300, 200, 300, 200, 500]);
       }
 
-      // Depois de 3 segundos, mostrar o susto
-      setTimeout(showScare, 3000);
+      // Texto digitado no alerta
+      typeWriter("⚠️ Alerta de Vírus ⚠️", "alertTitle", () => {
+        typeWriter("Seu celular pode estar sendo rastreado ou invadido", "alertText", () => {
+          setTimeout(showScare, 3000);
+        }, 40);
+      }, 40);
     }
 
-    // Mostra o susto final
+    // Mostra o susto
     function showScare() {
       document.getElementById("alerta").style.display = "none";
       document.getElementById("scare").style.display = "block";
       document.body.classList.remove("flash");
 
-      // Tocar o áudio
       const sound = document.getElementById("screamSound");
       sound.play();
     }
 
-    // Controle dos cliques no botão
+    // Controle do botão
     function handleClick() {
       clickCount++;
-      if (clickCount < 3) {
-        document.getElementById("message").textContent = messages[clickCount - 1];
+      if (clickCount < 4) {
+        document.getElementById("exitBtn").style.display = "none";
+        typeWriter(messages[clickCount], "message", () => {
+          document.getElementById("exitBtn").style.display = "inline-block";
+        });
       } else {
         showAlert();
       }
     }
 
-    // ⏱️ Susto automático após 10 segundos sem interação
+    // Susto automático após 10s sem interação
     let scareTimeout = setTimeout(showAlert, 10000);
-
     function resetTimer() {
       clearTimeout(scareTimeout);
       scareTimeout = setTimeout(showAlert, 10000);
     }
 
     window.onload = () => {
+      typeWriter(messages[0], "message", () => {
+        document.getElementById("exitBtn").style.display = "inline-block";
+      });
       document.addEventListener("mousemove", resetTimer);
       document.addEventListener("keydown", resetTimer);
       document.addEventListener("click", resetTimer);
