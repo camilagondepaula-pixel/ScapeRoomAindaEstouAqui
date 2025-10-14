@@ -102,8 +102,8 @@
     }
 
     window.onload = () => {
-      // Primeiro pede o nome
-      playerName = prompt("Digite seu nome:") || "visitante";
+      // Recupera o nome salvo no index.html
+      playerName = localStorage.getItem("playerName") || "visitante";
 
       // Define as frases já com o nome
       frases = [

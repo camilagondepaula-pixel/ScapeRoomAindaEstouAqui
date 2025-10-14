@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <p id="mensagem"></p>
-    <button id="exitBtn" onclick="window.location.href='end.html'" style="display:none;">Sair</button>
+    <button id="exitBtn" onclick="irParaFim()" style="display:none;">Sair</button>
   </div>
 
   <script>
@@ -27,6 +27,7 @@
     ];
 
     let index = 0;
+    let playerName = "";
 
     function typeWriter(texto, elementoId, callback, velocidade = 50) {
       let i = 0;
@@ -55,7 +56,15 @@
       }
     }
 
+    function irParaFim() {
+      // Salva o nome no localStorage
+      localStorage.setItem("playerName", playerName);
+      window.location.href = "end.html";
+    }
+
     window.onload = () => {
+      // Pede o nome logo no início
+      playerName = prompt("Digite seu nome:") || "visitante";
       mostrarProximaFrase();
     };
   </script>
