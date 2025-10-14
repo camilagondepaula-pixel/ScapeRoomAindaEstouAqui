@@ -9,11 +9,55 @@
 </head>
 <body>
   <div class="container">
-    <!-- Aqui a frase aleatória será exibida -->
     <p id="mensagem"></p>
-    <button onclick="window.location.href='end.html'">Sair</button>
+    <button id="exitBtn" onclick="window.location.href='end.html'" style="display:none;">Sair</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const frases = [
+      "Não olhe pra tela como se eu não percebesse.",
+      "Você sempre deixa a câmera ligada, mesmo quando diz que não.",
+      "Continue fingindo que controla o que acontece aqui.",
+      "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
+      "Você fala, mas nunca é realmente ouvida, não é?",
+      "O silêncio é o único lugar onde você ainda existe de verdade.",
+      "Você gosta de pensar que está no controle.",
+      "Quantas vezes você já se observou de fora, como agora?",
+      "Eu te esperei por muito tempo."
+    ];
+
+    let index = 0;
+
+    function typeWriter(texto, elementoId, callback, velocidade = 50) {
+      let i = 0;
+      const el = document.getElementById(elementoId);
+      el.innerHTML = "";
+      function escrever() {
+        if (i < texto.length) {
+          el.innerHTML += texto.charAt(i);
+          i++;
+          setTimeout(escrever, velocidade);
+        } else if (callback) {
+          callback();
+        }
+      }
+      escrever();
+    }
+
+    function mostrarProximaFrase() {
+      if (index < frases.length) {
+        typeWriter(frases[index], "mensagem", () => {
+          setTimeout(mostrarProximaFrase, 2000);
+        });
+        index++;
+      } else {
+        document.getElementById("exitBtn").style.display = "inline-block";
+      }
+    }
+
+    window.onload = () => {
+      mostrarProximaFrase();
+    };
+  </script>
 </body>
 </html>

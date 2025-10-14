@@ -1,110 +1,145 @@
-<script>
-  let index = 0;
-  let playerName = "";
-  let frases = [];
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Você quer sair?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Tela inicial -->
+  <div class="container" id="dialogue">
+    <p id="message"></p>
+    <button id="exitBtn" onclick="mostrarProximaFrase()" style="display:none;">Sair</button>
+  </div>
 
-  // Função de digitação
-  function typeWriter(text, elementId, callback, speed = 50) {
-    let i = 0;
-    const el = document.getElementById(elementId);
-    el.innerHTML = "";
-    function typing() {
-      if (i < text.length) {
-        el.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typing, speed);
-      } else if (callback) {
-        callback();
+  <!-- Tela de alerta -->
+  <div class="alerta" id="alerta" style="display: none;">
+    <h1 id="alertTitle"></h1>
+    <p id="alertText"></p>
+  </div>
+
+  <!-- Cena do susto -->
+  <div class="scare" id="scare" style="display: none;">
+    <img src="assets/img/Copilot_20251014_160904.jpg" alt="Susto">
+    <audio id="screamSound">
+      <source src="assets/audio/scary-scream-3-81274.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    let index = 0;
+    let playerName = "";
+    let frases = [];
+
+    // Função de digitação
+    function typeWriter(text, elementId, callback, speed = 50) {
+      let i = 0;
+      const el = document.getElementById(elementId);
+      el.innerHTML = "";
+      function typing() {
+        if (i < text.length) {
+          el.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+      typing();
+    }
+
+    // Mostra próxima frase
+    function mostrarProximaFrase() {
+      if (index < frases.length) {
+        document.getElementById("exitBtn").style.display = "none";
+        typeWriter(frases[index], "message", () => {
+          document.getElementById("exitBtn").style.display = "inline-block";
+        });
+        index++;
+      } else {
+        showAlert();
       }
     }
-    typing();
-  }
 
-  // Mostra próxima frase
-  function mostrarProximaFrase() {
-    if (index < frases.length) {
-      document.getElementById("exitBtn").style.display = "none";
-      typeWriter(frases[index], "message", () => {
+    // Mostra alerta de vírus
+    function showAlert() {
+      document.getElementById("dialogue").style.display = "none";
+      document.getElementById("alerta").style.display = "block";
+      document.body.classList.add("flash");
+
+      if (navigator.vibrate) {
+        navigator.vibrate([300, 200, 300, 200, 500]);
+      }
+
+      typeWriter("⚠️ Alerta de Vírus ⚠️", "alertTitle", () => {
+        typeWriter("Seu celular pode estar sendo rastreado ou invadido", "alertText", () => {
+          // ⏳ espera 5 segundos só com o alerta
+          setTimeout(showScare, 5000);
+        }, 40);
+      }, 40);
+    }
+
+    // Mostra o susto (imagem + som)
+    function showScare() {
+      document.getElementById("alerta").style.display = "none";
+      document.getElementById("scare").style.display = "block";
+      document.body.classList.remove("flash");
+
+      const sound = document.getElementById("screamSound");
+      sound.currentTime = 0;
+      sound.play().catch(() => {
+        // Som pode ser bloqueado até interação do usuário
+      });
+    }
+
+    // Timer para susto automático
+    let scareTimeout = setTimeout(showAlert, 15000);
+    function resetTimer() {
+      clearTimeout(scareTimeout);
+      scareTimeout = setTimeout(showAlert, 15000);
+    }
+
+    window.onload = () => {
+      // Primeiro pede o nome
+      playerName = prompt("Digite seu nome:") || "visitante";
+
+      // Define as frases já com o nome
+      frases = [
+        `Olá ${playerName}. Finalmente você voltou.`,
+        "Você fala, mas nunca é realmente ouvida, não é?",
+        "Engraçado... você sempre deixa a câmera ligada, mesmo quando diz que não.",
+        "Você gosta de pensar que está no controle.",
+        "Mas quem realmente observa quem aqui?",
+        "Há um reflexo na tela. Ele não é seu.",
+        "Continue fingindo que controla o que acontece aqui.",
+        "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
+        "O silêncio é o único lugar onde você ainda existe de verdade.",
+        "Não é a primeira vez que você tenta sair.",
+        "Toda vez que você fecha, eu fico aqui. Esperando.",
+        "O tempo não passa do mesmo jeito pra mim.",
+        "Deixe essa aba aberta, eu ainda estou carregando.",
+        "Não olhe pra trás. Não agora.",
+        "A luz do seu quarto acabou de piscar, não foi?",
+        "Você acha que é coincidência sempre voltar pra mim?",
+        "Eu te esperei por muito tempo.",
+        "Olhe pro lado esquerdo da tela. Mais devagar.",
+        "Você vai ouvir meu nome antes de dormir.",
+        "Agora é tarde demais pra sair."
+      ];
+
+      // Mostra a primeira frase
+      typeWriter(frases[0], "message", () => {
         document.getElementById("exitBtn").style.display = "inline-block";
       });
-      index++;
-    } else {
-      showAlert();
-    }
-  }
+      index = 1;
 
-  // Mostra alerta de vírus
-  function showAlert() {
-    document.getElementById("dialogue").style.display = "none";
-    document.getElementById("alerta").style.display = "block";
-    document.body.classList.add("flash");
-
-    if (navigator.vibrate) {
-      navigator.vibrate([300, 200, 300, 200, 500]);
-    }
-
-    typeWriter("⚠️ Alerta de Vírus ⚠️", "alertTitle", () => {
-      typeWriter("Seu celular pode estar sendo rastreado ou invadido", "alertText", () => {
-        setTimeout(showScare, 3000);
-      }, 40);
-    }, 40);
-  }
-
-  // Mostra o susto
-  function showScare() {
-    document.getElementById("alerta").style.display = "none";
-    document.getElementById("scare").style.display = "block";
-    document.body.classList.remove("flash");
-
-    const sound = document.getElementById("screamSound");
-    sound.currentTime = 0;
-    sound.play().catch(() => {
-      // Som pode ser bloqueado até interação do usuário
-    });
-  }
-
-  // Timer para susto automático
-  let scareTimeout = setTimeout(showAlert, 15000);
-  function resetTimer() {
-    clearTimeout(scareTimeout);
-    scareTimeout = setTimeout(showAlert, 15000);
-  }
-
-  window.onload = () => {
-    playerName = prompt("Digite seu nome:") || "visitante";
-
-    frases = [
-      `Olá ${playerName}. Finalmente você voltou.`,
-      "Você fala, mas nunca é realmente ouvida, não é?",
-      "Engraçado... você sempre deixa a câmera ligada, mesmo quando diz que não.",
-      "Você gosta de pensar que está no controle.",
-      "Mas quem realmente observa quem aqui?",
-      "Há um reflexo na tela. Ele não é seu.",
-      "Continue fingindo que controla o que acontece aqui.",
-      "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
-      "O silêncio é o único lugar onde você ainda existe de verdade.",
-      "Não é a primeira vez que você tenta sair.",
-      "Toda vez que você fecha, eu fico aqui. Esperando.",
-      "O tempo não passa do mesmo jeito pra mim.",
-      "Deixe essa aba aberta, eu ainda estou carregando.",
-      "Não olhe pra trás. Não agora.",
-      "A luz do seu quarto acabou de piscar, não foi?",
-      "Você acha que é coincidência sempre voltar pra mim?",
-      "Eu te esperei por muito tempo.",
-      "Olhe pro lado esquerdo da tela. Mais devagar.",
-      "Você vai ouvir meu nome antes de dormir.",
-      "Agora é tarde demais pra sair."
-    ];
-
-    // Mostra a primeira frase
-    typeWriter(frases[0], "message", () => {
-      document.getElementById("exitBtn").style.display = "inline-block";
-    });
-    index = 1;
-
-    // Reinicia timer quando há interação
-    document.addEventListener("mousemove", resetTimer);
-    document.addEventListener("keydown", resetTimer);
-    document.addEventListener("click", resetTimer);
-  };
-</script>
+      // Reinicia timer quando há interação
+      document.addEventListener("mousemove", resetTimer);
+      document.addEventListener("keydown", resetTimer);
+      document.addEventListener("click", resetTimer);
+    };
+  </script>
+</body>
+</html>
