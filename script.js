@@ -21,23 +21,37 @@ const frases = [
   "Você vai ouvir meu nome antes de dormir."
 ];
 
-// Escolhe uma frase aleatória
-const fraseEscolhida = frases[Math.floor(Math.random() * frases.length)];
+let index = 0;
 
 // Função para efeito de máquina de escrever
-function typeWriter(texto, elementoId, velocidade = 50) {
+function typeWriter(texto, elementoId, callback, velocidade = 50) {
   let i = 0;
+  const el = document.getElementById(elementoId);
+  el.innerHTML = ""; // limpa antes de escrever
   function escrever() {
     if (i < texto.length) {
-      document.getElementById(elementoId).innerHTML += texto.charAt(i);
+      el.innerHTML += texto.charAt(i);
       i++;
       setTimeout(escrever, velocidade);
+    } else if (callback) {
+      callback();
     }
   }
   escrever();
 }
 
-// Quando a página carregar, exibe a frase
+// Mostra frases em sequência
+function mostrarProximaFrase() {
+  if (index < frases.length) {
+    typeWriter(frases[index], "mensagem", () => {
+      // espera 2 segundos antes de mostrar a próxima
+      setTimeout(mostrarProximaFrase, 2000);
+    });
+    index++;
+  }
+}
+
+// Quando a página carregar, inicia a sequência
 window.onload = () => {
-  typeWriter(fraseEscolhida, "mensagem");
+  mostrarProximaFrase();
 };
