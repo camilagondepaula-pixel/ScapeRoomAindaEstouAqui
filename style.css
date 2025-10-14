@@ -1,37 +1,25 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #8b0000;
+  background-color: black;
   color: #fff;
   font-family: 'Special Elite', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  text-align: center;
 }
 
 .container {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px black;
-}
-
-input[type="text"] {
-  padding: 10px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  width: 60%;
+  padding: 20px;
 }
 
 button {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: #000;
+  background-color: #8b0000;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -39,5 +27,19 @@ button {
 }
 
 button:hover {
-  background-color: #333;
+  background-color: #a00000;
+}
+
+.scare img {
+  width: 100%;
+  max-width: 400px;
+  animation: shake 0.3s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0px, 0px); }
+  25% { transform: translate(5px, -5px); }
+  50% { transform: translate(-5px, 5px); }
+  75% { transform: translate(5px, 5px); }
+  100% { transform: translate(-5px, -5px); }
 }

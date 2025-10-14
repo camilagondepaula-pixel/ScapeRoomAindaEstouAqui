@@ -2,38 +2,94 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Você escapou</title>
+  <title>Você quer sair?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <audio autoplay>
-    <source src="assets/breath.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Tela inicial com botão -->
+  <div class="container" id="dialogue">
+    <p id="message">Você quer sair?</p>
+    <button onclick="handleClick()">Sair</button>
+  </div>
 
-  <div id="finalMessage">Parabéns, [nome]. Você escapou.</div>
-  <div id="locationMessage" style="text-align:center; margin-top:20px;"></div>
-  <button onclick="restart()">Recomeçar?</button>
+  <!-- Tela de alerta de vírus -->
+  <div class="alerta" id="alerta" style="display: none;">
+    <h1>⚠️ Alerta de Vírus ⚠️</h1>
+    <p>Seu celular pode estar sendo rastreado ou invadido</p>
+  </div>
+
+  <!-- Cena do susto -->
+  <div class="scare" id="scare" style="display: none;">
+    <!-- SUA IMAGEM DE SUSTO -->
+    <img src="Copilot_20251014_160904.jpg.png" alt="Susto" />
+
+    <!-- SEU ÁUDIO DE SUSTO -->
+    <audio id="screamSound">
+      <source src="assets/audio/scary-scream-3-81274.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
   <script>
-    const name = localStorage.getItem('playerName');
-    document.getElementById('finalMessage').innerText = `Parabéns, ${name}. Você escapou.`;
+    let clickCount = 0;
+    const messages = [
+      "Tem certeza que quer sair?",
+      "Você ainda está aí...",
+      "Última chance..."
+    ];
 
-    setTimeout(() => {
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        const lat = pos.coords.latitude.toFixed(3);
-        const lon = pos.coords.longitude.toFixed(3);
-        document.getElementById('locationMessage').innerText =
-          `Mas algo ficou do outro lado... em ${lat}, ${lon}.`;
-      }, function() {
-        document.getElementById('locationMessage').innerText =
-          'Mas algo ficou do outro lado... e ele sabe onde te encontrar.';
-      });
-    }, 2000);
+    // Mostra alerta de vírus
+    function showAlert() {
+      document.getElementById("dialogue").style.display = "none";
+      document.getElementById("alerta").style.display = "block";
 
-    function restart() {
-      window.location.href = 'index.html';
+      // Piscar a tela em vermelho
+      document.body.classList.add("flash");
+
+      // Vibrar no celular
+      if (navigator.vibrate) {
+        navigator.vibrate([300, 200, 300, 200, 500]);
+      }
+
+      // Depois de 3 segundos, mostrar o susto
+      setTimeout(showScare, 3000);
     }
+
+    // Mostra o susto final
+    function showScare() {
+      document.getElementById("alerta").style.display = "none";
+      document.getElementById("scare").style.display = "block";
+      document.body.classList.remove("flash");
+
+      // Tocar o áudio
+      const sound = document.getElementById("screamSound");
+      sound.play();
+    }
+
+    // Controle dos cliques no botão
+    function handleClick() {
+      clickCount++;
+      if (clickCount < 3) {
+        document.getElementById("message").textContent = messages[clickCount - 1];
+      } else {
+        showAlert();
+      }
+    }
+
+    // ⏱️ Susto automático após 10 segundos sem interação
+    let scareTimeout = setTimeout(showAlert, 10000);
+
+    function resetTimer() {
+      clearTimeout(scareTimeout);
+      scareTimeout = setTimeout(showAlert, 10000);
+    }
+
+    window.onload = () => {
+      document.addEventListener("mousemove", resetTimer);
+      document.addEventListener("keydown", resetTimer);
+      document.addEventListener("click", resetTimer);
+    };
   </script>
 </body>
 </html>

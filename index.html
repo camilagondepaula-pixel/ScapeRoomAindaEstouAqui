@@ -3,26 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Não Feche Essa Aba</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Não Feche Essa Aba</h1>
-    <p>Olá... você ainda está aí?</p>
-    <p>Digite seu nome para continuar</p>
-    <input type="text" id="nameInput" placeholder="Seu nome">
-    <button onclick="enter()">Entrar</button>
+    <!-- Aqui a frase aleatória será exibida -->
+    <p id="mensagem"></p>
+    <button onclick="window.location.href='end.html'">Sair</button>
   </div>
 
-  <script>
-    function enter() {
-      const name = document.getElementById('nameInput').value;
-      if (name.trim() !== '') {
-        localStorage.setItem('playerName', name);
-        window.location.href = 'room.html';
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
