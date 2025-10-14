@@ -11,7 +11,7 @@
   <!-- Tela inicial -->
   <div class="container" id="dialogue">
     <p id="message"></p>
-    <button id="exitBtn" onclick="handleClick()" style="display:none;">Sair</button>
+    <button id="exitBtn" onclick="mostrarProximaFrase()" style="display:none;">Sair</button>
   </div>
 
   <!-- Tela de alerta -->
@@ -22,20 +22,16 @@
 
   <!-- Cena do susto -->
   <div class="scare" id="scare" style="display: none;">
-    <img src="Copilot_20251014_160904.jpg.png" alt="Susto" />
+    <img src="assets/img/personagem-assustador.jpg" alt="Susto" />
     <audio id="screamSound">
       <source src="assets/audio/scary-scream-3-81274.mp3" type="audio/mpeg">
     </audio>
   </div>
 
   <script>
-    let clickCount = 0;
-    const messages = [
-      "Você quer sair?",
-      "Tem certeza que quer sair?",
-      "Você ainda está aí...",
-      "Última chance..."
-    ];
+    let index = 0;
+    let playerName = "";
+    let frases = [];
 
     // Função de digitação
     function typeWriter(text, elementId, callback, speed = 50) {
@@ -53,18 +49,29 @@
       typing();
     }
 
+    // Mostra próxima frase
+    function mostrarProximaFrase() {
+      if (index < frases.length) {
+        document.getElementById("exitBtn").style.display = "none";
+        typeWriter(frases[index], "message", () => {
+          document.getElementById("exitBtn").style.display = "inline-block";
+        });
+        index++;
+      } else {
+        showAlert();
+      }
+    }
+
     // Mostra alerta de vírus
     function showAlert() {
       document.getElementById("dialogue").style.display = "none";
       document.getElementById("alerta").style.display = "block";
       document.body.classList.add("flash");
 
-      // Vibrar no celular
       if (navigator.vibrate) {
         navigator.vibrate([300, 200, 300, 200, 500]);
       }
 
-      // Texto digitado no alerta
       typeWriter("⚠️ Alerta de Vírus ⚠️", "alertTitle", () => {
         typeWriter("Seu celular pode estar sendo rastreado ou invadido", "alertText", () => {
           setTimeout(showScare, 3000);
@@ -79,37 +86,20 @@
       document.body.classList.remove("flash");
 
       const sound = document.getElementById("screamSound");
-      sound.play();
+      sound.currentTime = 0;
+      sound.play().catch(err => {
+        console.log("Som bloqueado até interação do usuário:", err);
+      });
     }
 
-    // Controle do botão
-    function handleClick() {
-      clickCount++;
-      if (clickCount < 4) {
-        document.getElementById("exitBtn").style.display = "none";
-        typeWriter(messages[clickCount], "message", () => {
-          document.getElementById("exitBtn").style.display = "inline-block";
-        });
-      } else {
-        showAlert();
-      }
-    }
-
-    // Susto automático após 10s sem interação
-    let scareTimeout = setTimeout(showAlert, 10000);
+    // Timer para susto automático
+    let scareTimeout = setTimeout(showAlert, 15000);
     function resetTimer() {
       clearTimeout(scareTimeout);
-      scareTimeout = setTimeout(showAlert, 10000);
+      scareTimeout = setTimeout(showAlert, 15000);
     }
 
     window.onload = () => {
-      typeWriter(messages[0], "message", () => {
-        document.getElementById("exitBtn").style.display = "inline-block";
-      });
-      document.addEventListener("mousemove", resetTimer);
-      document.addEventListener("keydown", resetTimer);
-      document.addEventListener("click", resetTimer);
-    };
-  </script>
-</body>
-</html>
+      playerName = prompt("Digite seu nome:") || "visitante";
+
+      frases

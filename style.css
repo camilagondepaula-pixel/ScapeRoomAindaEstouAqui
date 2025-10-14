@@ -59,7 +59,6 @@ button:hover {
   100% { transform: translate(-5px, -5px); }
 }
 
-/* Efeito de flash vermelho */
 .flash {
   animation: flashRed 0.2s alternate infinite;
 }
