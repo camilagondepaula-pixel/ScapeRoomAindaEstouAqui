@@ -12,7 +12,6 @@
     <h1 class="titulo">A Hora da Sua Morte</h1>
     <p class="intro">Você morrerá em:</p>
 
-    <!-- Contador estilo filme -->
     <div id="deathTimer" class="timer">
       <div class="timer-block">
         <div class="timer-value" id="years">00</div>
@@ -36,10 +35,8 @@
       </div>
     </div>
 
-    <!-- Premonição -->
     <p id="premonition" class="premonition"></p>
 
-    <!-- Botão de cancelamento -->
     <button id="cancelBtn" onclick="tentarCancelar()">Tentar cancelar</button>
     <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
   </div>
@@ -84,9 +81,16 @@
 
     function iniciarContagem(segundos) {
       atualizarContador(segundos);
-      setInterval(() => {
+      const intervalo = setInterval(() => {
         segundos--;
-        atualizarContador(segundos);
+        if (segundos <= 0) {
+          clearInterval(intervalo);
+          document.getElementById("premonition").textContent = "⏳ O tempo acabou.";
+          document.body.classList.add("flash-intensa");
+          document.getElementById("cancelBtn").style.display = "none";
+        } else {
+          atualizarContador(segundos);
+        }
       }, 1000);
     }
 
