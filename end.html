@@ -2,126 +2,94 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Você quer sair?</title>
+  <title>Countdown</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="container" id="dialogue">
-    <p id="message"></p>
-    <button id="exitBtn" onclick="mostrarProximaFrase()" style="display:none;">Sair</button>
-  </div>
-
-  <div class="alerta" id="alerta" style="display: none;">
-    <h1 id="alertTitle"></h1>
-    <p id="alertText"></p>
-  </div>
-
-  <div class="scare" id="scare" style="display: none;">
-    <img src="Copilot_20251014_160904.jpg.png" alt="Susto">
-    <audio id="screamSound">
-      <source src="scary-scream-3-81274.mp3" type="audio/mpeg">
-    </audio>
+<body class="flash">
+  <div class="app-fake">
+    <h1>⏳ Countdown</h1>
+    <p>Você morrerá em:</p>
+    <div id="deathTimer" class="timer"></div>
+    <p id="premonition" class="premonition"></p>
+    <button id="cancelBtn" onclick="tentarCancelar()">Tentar cancelar</button>
+    <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
   </div>
 
   <script>
-    let index = 0;
-    let playerName = localStorage.getItem("playerName") || "visitante";
-    let frases = [];
+    window.onbeforeunload = function () {
+      return "Você não pode sair agora. O tempo está correndo.";
+    };
 
-    function typeWriter(text, elementId, callback, speed = 50) {
-      let i = 0;
-      const el = document.getElementById(elementId);
-      el.innerHTML = "";
-      function typing() {
-        if (i < text.length) {
-          el.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typing, speed);
-        } else if (callback) {
-          callback();
-        }
-      }
-      typing();
+    function gerarTempoAleatorio() {
+      const dias = Math.floor(Math.random() * 10) + 1;
+      const horas = Math.floor(Math.random() * 24);
+      const minutos = Math.floor(Math.random() * 60);
+      const segundos = Math.floor(Math.random() * 60);
+
+      return (
+        (dias * 24 * 60 * 60) +
+        (horas * 60 * 60) +
+        (minutos * 60) +
+        segundos
+      );
     }
 
-    function mostrarProximaFrase() {
-      if (index < frases.length) {
-        document.getElementById("exitBtn").style.display = "none";
-        typeWriter(frases[index], "message", () => {
-          document.getElementById("exitBtn").style.display = "inline-block";
-        });
-        index++;
-      } else {
-        showAlert();
-      }
+    function formatarTempo(segundosTotais) {
+      const dias = Math.floor(segundosTotais / (24 * 60 * 60));
+      segundosTotais %= (24 * 60 * 60);
+      const horas = Math.floor(segundosTotais / (60 * 60));
+      segundosTotais %= (60 * 60);
+      const minutos = Math.floor(segundosTotais / 60);
+      const segundos = segundosTotais % 60;
+
+      return `${dias}d ${horas}h ${minutos}min ${segundos}s`;
     }
 
-    function showAlert() {
-      document.getElementById("dialogue").style.display = "none";
-      document.getElementById("alerta").style.display = "block";
-      document.body.classList.add("flash");
+    function iniciarContagem(segundos) {
+      const timerEl = document.getElementById("deathTimer");
 
-      if (navigator.vibrate) {
-        navigator.vibrate([300, 200, 300, 200, 500]);
-      }
-
-      typeWriter("⚠️ Alerta de Vírus ⚠️", "alertTitle", () => {
-        typeWriter("Seu celular pode estar sendo rastreado ou invadido", "alertText", () => {
-          setTimeout(showScare, 5000);
-        }, 40);
-      }, 40);
+      setInterval(() => {
+        timerEl.textContent = formatarTempo(segundos);
+        segundos--;
+      }, 1000);
     }
 
-    function showScare() {
-      document.getElementById("alerta").style.display = "none";
-      document.getElementById("scare").style.display = "block";
-      document.body.classList.remove("flash");
+    function gerarPremonicao() {
+      const mensagens = [
+        "Cuidado com o sinal verde.",
+        "Preste atenção no chuveiro.",
+        "A buzina pode ser o último som que você ouvirá.",
+        "Evite escadas hoje.",
+        "Não confie no travesseiro.",
+        "O cheiro de gás não é coincidência.",
+        "A porta do elevador pode não abrir.",
+        "O reflexo no espelho não é seu.",
+        "Você vai ouvir meu nome antes de dormir.",
+        "O último gole pode ser o mais perigoso.",
+        "A luz do seu quarto acabou de piscar, não foi?",
+        "Você está sendo observado enquanto lê isso."
+      ];
 
-      const sound = document.getElementById("screamSound");
-      sound.currentTime = 0;
-      sound.play().catch(() => {});
+      const aleatoria = mensagens[Math.floor(Math.random() * mensagens.length)];
+      document.getElementById("premonition").textContent = aleatoria;
     }
 
-    let scareTimeout = setTimeout(showAlert, 15000);
-    function resetTimer() {
-      clearTimeout(scareTimeout);
-      scareTimeout = setTimeout(showAlert, 15000);
+    function tentarCancelar() {
+      const btn = document.getElementById("cancelBtn");
+      const msg = document.getElementById("cancelMessage");
+
+      btn.style.display = "none";
+      msg.textContent = "⛔ Cancelamento negado. O destino já foi selado.";
+      msg.style.display = "block";
+      document.body.classList.add("flash-intensa");
     }
 
     window.onload = () => {
-      frases = [
-        `Olá ${playerName}. Finalmente você voltou.`,
-        "Você fala, mas nunca é realmente ouvida, não é?",
-        "Engraçado... você sempre deixa a câmera ligada, mesmo quando diz que não.",
-        "Você gosta de pensar que está no controle.",
-        "Mas quem realmente observa quem aqui?",
-        "Há um reflexo na tela. Ele não é seu.",
-        "Continue fingindo que controla o que acontece aqui.",
-        "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
-        "O silêncio é o único lugar onde você ainda existe de verdade.",
-        "Não é a primeira vez que você tenta sair.",
-        "Toda vez que você fecha, eu fico aqui. Esperando.",
-        "O tempo não passa do mesmo jeito pra mim.",
-        "Deixe essa aba aberta, eu ainda estou carregando.",
-        "Não olhe pra trás. Não agora.",
-        "A luz do seu quarto acabou de piscar, não foi?",
-        "Você acha que é coincidência sempre voltar pra mim?",
-        "Eu te esperei por muito tempo.",
-        "Olhe pro lado esquerdo da tela. Mais devagar.",
-        "Você vai ouvir meu nome antes de dormir.",
-        "Agora é tarde demais pra sair."
-      ];
-
-      typeWriter(frases[0], "message", () => {
-        document.getElementById("exitBtn").style.display = "inline-block";
-      });
-      index = 1;
-
-      document.addEventListener("mousemove", resetTimer);
-      document.addEventListener("keydown", resetTimer);
-      document.addEventListener("click", resetTimer);
+      const tempoInicial = gerarTempoAleatorio();
+      iniciarContagem(tempoInicial);
+      gerarPremonicao();
     };
   </script>
 </body>
