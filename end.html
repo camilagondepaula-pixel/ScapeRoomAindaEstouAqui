@@ -37,7 +37,8 @@
 
     <p id="premonition" class="premonition"></p>
 
-    <button id="cancelBtn" onclick="tentarCancelar()">Tentar cancelar</button>
+    <audio id="glitchSound" src="glitch.mp3" preload="auto"></audio>
+    <button id="cancelBtn">Tentar cancelar</button>
     <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
   </div>
 
@@ -116,6 +117,12 @@
       const aleatoria = mensagens[Math.floor(Math.random() * mensagens.length)];
       document.getElementById("premonition").textContent = aleatoria;
     }
+
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      const audio = document.getElementById("glitchSound");
+      audio.play();
+      tentarCancelar();
+    });
 
     function tentarCancelar() {
       const btn = document.getElementById("cancelBtn");
