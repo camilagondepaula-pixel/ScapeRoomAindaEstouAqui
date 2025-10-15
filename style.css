@@ -72,7 +72,16 @@ body {
   font-size: 0.9rem;
   color: #ccc;
   margin-top: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
+
+/* Traduções dos rótulos */
+.timer-label:nth-child(2):nth-of-type(1)::after { content: "ANO"; }
+.timer-label:nth-child(2):nth-of-type(2)::after { content: "DIAS"; }
+.timer-label:nth-child(2):nth-of-type(3)::after { content: "HORAS"; }
+.timer-label:nth-child(2):nth-of-type(4)::after { content: "MINUTOS"; }
+.timer-label:nth-child(2):nth-of-type(5)::after { content: "SEGUNDOS"; }
 
 /* Premonição */
 .premonition {
