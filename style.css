@@ -14,7 +14,7 @@ body {
   padding: 0;
   background: linear-gradient(145deg, #0b0b0b, #161616);
   color: #e6e6e6;
-  font-family: 'Orbitron', sans-serif; /* padrão moderno */
+  font-family: 'Orbitron', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +85,7 @@ body {
 
 /* ===== Premonição ===== */
 .premonition {
-  font-family: 'Special Elite', monospace !important; /* sombria/narrativa */
+  font-family: 'Special Elite', monospace !important;
   font-size: 1.1rem;
   font-style: italic;
   color: #ccc;
@@ -138,7 +138,7 @@ button:active,
 }
 
 .flash-intensa {
-  animation: flashRedIntensa 0.25s alternate 12; /* efeito curto e intenso */
+  animation: flashRedIntensa 0.25s alternate 12;
 }
 
 @keyframes flashRed {
@@ -149,6 +149,17 @@ button:active,
 @keyframes flashRedIntensa {
   from { background-color: #0b0b0b; }
   to   { background-color: #b30000; }
+}
+
+/* ===== Efeito para "Agora é." ===== */
+.piscar-vermelho {
+  color: #ff3b3b;
+  animation: piscar 0.6s infinite alternate;
+}
+
+@keyframes piscar {
+  from { opacity: 1; }
+  to   { opacity: 0.2; }
 }
 
 /* ===== Responsividade ===== */
