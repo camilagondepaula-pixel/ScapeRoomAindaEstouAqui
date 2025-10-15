@@ -89,6 +89,7 @@
           document.getElementById("premonition").textContent = "⏳ O tempo acabou.";
           document.body.classList.add("flash-intensa");
           document.getElementById("cancelBtn").style.display = "none";
+          tocarGlitch();
         } else {
           atualizarContador(segundos);
         }
@@ -118,9 +119,15 @@
       document.getElementById("premonition").textContent = aleatoria;
     }
 
-    document.getElementById("cancelBtn").addEventListener("click", () => {
+    function tocarGlitch() {
       const audio = document.getElementById("glitchSound");
-      audio.play();
+      audio.play().catch(() => {
+        console.warn("O navegador bloqueou o som. Interaja com a página primeiro.");
+      });
+    }
+
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      tocarGlitch();
       tentarCancelar();
     });
 
