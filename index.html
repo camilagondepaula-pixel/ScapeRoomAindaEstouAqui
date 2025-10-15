@@ -14,18 +14,6 @@
   </div>
 
   <script>
-    const frases = [
-      "Não olhe pra tela como se eu não percebesse.",
-      "Você sempre deixa a câmera ligada, mesmo quando diz que não.",
-      "Continue fingindo que controla o que acontece aqui.",
-      "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
-      "Você fala, mas nunca é realmente ouvida, não é?",
-      "O silêncio é o único lugar onde você ainda existe de verdade.",
-      "Você gosta de pensar que está no controle.",
-      "Quantas vezes você já se observou de fora, como agora?",
-      "Eu te esperei por muito tempo."
-    ];
-
     let index = 0;
     let playerName = "";
 
@@ -57,14 +45,24 @@
     }
 
     function irParaFim() {
-      // Salva o nome no localStorage
       localStorage.setItem("playerName", playerName);
       window.location.href = "end.html";
     }
 
     window.onload = () => {
-      // Pede o nome logo no início
       playerName = prompt("Digite seu nome:") || "visitante";
+
+      frases = [
+        `Olá ${playerName}, você voltou.`,
+        `${playerName}, você sempre deixa a câmera ligada.`,
+        "Continue fingindo que controla o que acontece aqui.",
+        "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
+        "Você fala, mas nunca é realmente ouvida, não é?",
+        "O silêncio é o único lugar onde você ainda existe de verdade.",
+        "Quantas vezes você já se observou de fora, como agora?",
+        "Eu te esperei por muito tempo."
+      ];
+
       mostrarProximaFrase();
     };
   </script>
