@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>A Hora da Sua Morte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fontes -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,6 +13,7 @@
     <h1 class="titulo">A Hora da Sua Morte</h1>
     <p class="intro">Você morrerá em:</p>
 
+    <!-- Contador -->
     <div id="deathTimer" class="timer">
       <div class="timer-block">
         <div class="timer-value" id="years">00</div>
@@ -35,8 +37,10 @@
       </div>
     </div>
 
+    <!-- Premonição -->
     <p id="premonition" class="premonition"></p>
 
+    <!-- Áudio + Botão -->
     <audio id="glitchSound" src="glitch.mp3" preload="auto"></audio>
     <button id="cancelBtn">Tentar cancelar</button>
     <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
