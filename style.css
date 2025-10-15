@@ -1,23 +1,82 @@
-/* Fonte e layout base */
+/* Tipografia cinematográfica */
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Special+Elite&display=swap');
+
 body {
   margin: 0;
   padding: 0;
-  background-color: black;
-  color: #fff;
+  background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+  color: #e0e0e0;
   font-family: 'Special Elite', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   text-align: center;
+  overflow: hidden;
 }
 
-/* Container inicial */
-.container {
-  padding: 20px;
+/* Layout moderno */
+.app-fake {
+  background: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 90%;
+  animation: blink 0.5s infinite;
 }
 
-/* Botões */
+/* Título do app */
+h1 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #ff4444;
+  letter-spacing: 1px;
+}
+
+/* Contador estilo filme */
+.timer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.timer-block {
+  background-color: #1a1a1a;
+  border: 2px solid #ff4444;
+  border-radius: 8px;
+  padding: 10px 15px;
+  width: 48%;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+}
+
+.timer-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.timer-label {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+/* Premonição */
+.premonition {
+  margin-top: 30px;
+  font-style: italic;
+  color: #ccc;
+  font-size: 1.1rem;
+  animation: fadeIn 1s ease-in;
+}
+
+/* Botão cancelar */
 button {
   margin-top: 30px;
   padding: 10px 20px;
@@ -27,42 +86,11 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #a00000;
-}
-
-/* Tela falsa do app Countdown */
-.app-fake {
-  padding: 30px;
-  border: 2px solid red;
-  background-color: #111;
-  box-shadow: 0 0 20px red;
-  animation: blink 0.5s infinite;
-  max-width: 90%;
-  border-radius: 10px;
-}
-
-/* Título do app */
-h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-/* Contador de tempo */
-.timer {
-  font-size: 1.8rem;
-  margin-top: 20px;
-  color: #ff4444;
-}
-
-/* Premonição */
-.premonition {
-  margin-top: 30px;
-  font-style: italic;
-  color: #ccc;
-  font-size: 1.1rem;
 }
 
 /* Mensagem de cancelamento */
@@ -71,30 +99,34 @@ h1 {
   font-size: 1.2rem;
   color: #ff6666;
   font-weight: bold;
+  transition: opacity 0.5s ease;
 }
 
-/* Luz piscando padrão */
+/* Luz piscando */
 .flash {
   animation: flashRed 0.3s alternate infinite;
 }
 
-@keyframes flashRed {
-  from { background-color: black; }
-  to { background-color: darkred; }
-}
-
-/* Luz piscando intensa após cancelamento */
 .flash-intensa {
   animation: flashRedIntensa 0.2s alternate infinite;
 }
 
+@keyframes flashRed {
+  from { background-color: #0d0d0d; }
+  to { background-color: #330000; }
+}
+
 @keyframes flashRedIntensa {
-  from { background-color: black; }
+  from { background-color: #0d0d0d; }
   to { background-color: red; }
 }
 
-/* Piscar da borda do app */
 @keyframes blink {
-  0%, 100% { box-shadow: 0 0 20px red; }
-  50% { box-shadow: 0 0 5px darkred; }
+  0%, 100% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

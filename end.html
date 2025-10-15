@@ -4,31 +4,62 @@
   <meta charset="UTF-8">
   <title>Countdown</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="flash">
   <div class="app-fake">
     <h1>⏳ Countdown</h1>
     <p>Você morrerá em:</p>
-    <div id="deathTimer" class="timer"></div>
+
+    <!-- Contador estilo filme -->
+    <div id="deathTimer" class="timer">
+      <div class="timer-block">
+        <div class="timer-value" id="years">00</div>
+        <div class="timer-label">YRS</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-value" id="days">00</div>
+        <div class="timer-label">DAY</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-value" id="hours">00</div>
+        <div class="timer-label">HRS</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-value" id="minutes">00</div>
+        <div class="timer-label">MIN</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-value" id="seconds">00</div>
+        <div class="timer-label">SEC</div>
+      </div>
+    </div>
+
+    <!-- Premonição -->
     <p id="premonition" class="premonition"></p>
+
+    <!-- Botão de cancelamento -->
     <button id="cancelBtn" onclick="tentarCancelar()">Tentar cancelar</button>
     <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
   </div>
 
   <script>
+    // Bloqueia tentativa de saída
     window.onbeforeunload = function () {
       return "Você não pode sair agora. O tempo está correndo.";
     };
 
+    // Gera tempo aleatório
     function gerarTempoAleatorio() {
-      const dias = Math.floor(Math.random() * 10) + 1;
+      const anos = Math.floor(Math.random() * 2); // até 1 ano
+      const dias = Math.floor(Math.random() * 365);
       const horas = Math.floor(Math.random() * 24);
       const minutos = Math.floor(Math.random() * 60);
       const segundos = Math.floor(Math.random() * 60);
 
       return (
+        (anos * 365 * 24 * 60 * 60) +
         (dias * 24 * 60 * 60) +
         (horas * 60 * 60) +
         (minutos * 60) +
@@ -36,26 +67,34 @@
       );
     }
 
-    function formatarTempo(segundosTotais) {
-      const dias = Math.floor(segundosTotais / (24 * 60 * 60));
+    // Atualiza contador estilo filme
+    function atualizarContador(segundosTotais) {
+      const years = Math.floor(segundosTotais / (365 * 24 * 60 * 60));
+      segundosTotais %= (365 * 24 * 60 * 60);
+      const days = Math.floor(segundosTotais / (24 * 60 * 60));
       segundosTotais %= (24 * 60 * 60);
-      const horas = Math.floor(segundosTotais / (60 * 60));
+      const hours = Math.floor(segundosTotais / (60 * 60));
       segundosTotais %= (60 * 60);
-      const minutos = Math.floor(segundosTotais / 60);
-      const segundos = segundosTotais % 60;
+      const minutes = Math.floor(segundosTotais / 60);
+      const seconds = segundosTotais % 60;
 
-      return `${dias}d ${horas}h ${minutos}min ${segundos}s`;
+      document.getElementById("years").textContent = String(years).padStart(2, '0');
+      document.getElementById("days").textContent = String(days).padStart(2, '0');
+      document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
     }
 
+    // Inicia contagem regressiva
     function iniciarContagem(segundos) {
-      const timerEl = document.getElementById("deathTimer");
-
+      atualizarContador(segundos);
       setInterval(() => {
-        timerEl.textContent = formatarTempo(segundos);
         segundos--;
+        atualizarContador(segundos);
       }, 1000);
     }
 
+    // Gera premonição aleatória
     function gerarPremonicao() {
       const mensagens = [
         "Cuidado com o sinal verde.",
@@ -76,6 +115,7 @@
       document.getElementById("premonition").textContent = aleatoria;
     }
 
+    // Tentar cancelar destino
     function tentarCancelar() {
       const btn = document.getElementById("cancelBtn");
       const msg = document.getElementById("cancelMessage");
@@ -86,6 +126,7 @@
       document.body.classList.add("flash-intensa");
     }
 
+    // Inicia tudo ao carregar
     window.onload = () => {
       const tempoInicial = gerarTempoAleatorio();
       iniciarContagem(tempoInicial);
