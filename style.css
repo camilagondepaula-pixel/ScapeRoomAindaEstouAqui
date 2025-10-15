@@ -1,132 +1,182 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Special+Elite&display=swap');
 
-/* Base */
+/* ===== Base da página ===== */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
-  color: #e0e0e0;
+  background: linear-gradient(145deg, #0b0b0b, #161616);
+  color: #e6e6e6;
   font-family: 'Orbitron', sans-serif; /* padrão moderno */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   text-align: center;
   overflow: hidden;
 }
 
-/* Container */
+/* ===== Container principal ===== */
 .app-fake {
-  background: rgba(17, 17, 17, 0.85);
+  background: rgba(18, 18, 18, 0.85);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.25);
   border-radius: 12px;
-  padding: 40px 30px;
-  max-width: 400px;
-  width: 90%;
+  padding: 36px 28px;
+  max-width: 440px;
+  width: 92%;
 }
 
-/* Título */
+/* ===== Título e intro ===== */
 .titulo {
-  font-family: 'Orbitron', sans-serif;
   font-size: 2.2rem;
-  margin-bottom: 10px;
-  color: #ff4444;
-  letter-spacing: 1px;
+  margin: 0 0 8px 0;
+  color: #ff3b3b;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
-/* Subtítulo */
 .intro {
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  margin: 0 0 22px 0;
 }
 
-/* Contador */
+/* ===== Contador ===== */
 .timer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 12px;
+  margin-bottom: 26px;
 }
 
 .timer-block {
-  background-color: #1a1a1a;
-  border: 2px solid #ff4444;
-  border-radius: 8px;
-  padding: 10px 15px;
-  width: 80px;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+  background-color: #151515;
+  border: 2px solid #ff3b3b;
+  border-radius: 10px;
+  padding: 12px 14px;
+  width: 92px;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.18);
 }
 
 .timer-value {
-  font-family: 'Orbitron', sans-serif; /* moderno */
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   font-weight: 700;
-  color: #fff;
+  line-height: 1;
+  color: #ffffff;
 }
 
 .timer-label {
-  font-family: 'Orbitron', sans-serif; /* moderno */
-  font-size: 0.9rem;
-  color: #ccc;
-  margin-top: 5px;
-  font-weight: bold;
+  font-size: 0.88rem;
+  color: #c9c9c9;
+  margin-top: 6px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
 }
 
-/* Premonição */
+/* ===== Premonição ===== */
 .premonition {
-  font-family: 'Special Elite', monospace; /* sombria */
+  font-family: 'Special Elite', monospace !important; /* sombria/narrativa */
   font-size: 1.1rem;
   font-style: italic;
   color: #ccc;
   margin-top: 20px;
+  line-height: 1.4;
 }
 
-/* Botão */
-button {
-  margin-top: 30px;
-  padding: 10px 20px;
+/* ===== Botão ===== */
+button,
+#cancelBtn {
+  margin-top: 26px;
+  padding: 12px 20px;
   font-size: 1rem;
-  font-family: 'Orbitron', sans-serif; /* botão também moderno */
-  background-color: #8b0000;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+  background: linear-gradient(180deg, #9b0000, #7e0000);
+  color: #ffffff;
+  border: 1px solid #b30000;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.08s ease, box-shadow 0.25s ease, background 0.25s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
-button:hover {
-  background-color: #a00000;
+button:hover,
+#cancelBtn:hover {
+  background: linear-gradient(180deg, #b00000, #8a0000);
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.35);
+  transform: translateY(-1px);
 }
 
-/* Mensagem de cancelamento */
+button:active,
+#cancelBtn:active {
+  transform: translateY(0);
+}
+
+/* ===== Mensagem de cancelamento ===== */
 .cancel-message {
-  margin-top: 30px;
-  font-size: 1.2rem;
-  color: #ff6666;
-  font-weight: bold;
-  transition: opacity 0.5s ease;
+  margin-top: 22px;
+  font-size: 1.12rem;
+  color: #ff7070;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  opacity: 0.95;
+  transition: opacity 0.4s ease;
 }
 
-/* Efeitos */
+/* ===== Efeitos visuais globais ===== */
 .flash {
-  animation: flashRed 0.3s alternate infinite;
+  animation: flashRed 0.5s alternate infinite;
 }
 
 .flash-intensa {
-  animation: flashRedIntensa 0.2s alternate infinite;
+  animation: flashRedIntensa 0.25s alternate 12; /* efeito curto e intenso */
 }
 
 @keyframes flashRed {
-  from { background-color: #0d0d0d; }
-  to { background-color: #330000; }
+  from { background-color: #0b0b0b; }
+  to   { background-color: #2a0000; }
 }
 
 @keyframes flashRedIntensa {
-  from { background-color: #0d0d0d; }
-  to { background-color: red; }
+  from { background-color: #0b0b0b; }
+  to   { background-color: #b30000; }
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 380px) {
+  .app-fake {
+    padding: 28px 22px;
+    max-width: 94%;
+  }
+  .timer-block {
+    width: 88px;
+    padding: 10px 12px;
+  }
+  .timer-value {
+    font-size: 2.3rem;
+  }
+  .timer-label {
+    font-size: 0.82rem;
+  }
+  .titulo {
+    font-size: 2rem;
+  }
+}
+
+/* ===== Força Orbitron no contador ===== */
+.timer-value,
+.timer-label,
+.titulo,
+.intro,
+button {
+  font-family: 'Orbitron', sans-serif !important;
 }
