@@ -11,6 +11,7 @@
   <div class="container">
     <p id="mensagem"></p>
     <button id="exitBtn" onclick="irParaFim()" style="display:none;">Sair</button>
+    <audio id="glitchSound" src="glitch.mp3" preload="auto"></audio>
   </div>
 
   <script>
@@ -22,13 +23,19 @@
       let i = 0;
       const el = document.getElementById(elementoId);
       el.innerHTML = "";
+
       function escrever() {
         if (i < texto.length) {
           el.innerHTML += texto.charAt(i);
           i++;
           setTimeout(escrever, velocidade);
-        } else if (callback) {
-          callback();
+        } else {
+          if (texto === "Agora é.") {
+            document.getElementById("glitchSound").play();
+            el.classList.add("glitch");
+            setTimeout(() => el.classList.remove("glitch"), 1000);
+          }
+          if (callback) callback();
         }
       }
       escrever();
@@ -37,7 +44,7 @@
     function mostrarProximaFrase() {
       if (index < frases.length) {
         typeWriter(frases[index], "mensagem", () => {
-          setTimeout(mostrarProximaFrase, 2000);
+          setTimeout(mostrarProximaFrase, 2500);
         });
         index++;
       } else {
@@ -54,14 +61,21 @@
       playerName = prompt("Digite seu nome:") || "visitante";
 
       frases = [
-        `Olá ${playerName}, você voltou.`,
-        `${playerName}, você sempre deixa a câmera ligada.`,
-        "Continue fingindo que controla o que acontece aqui.",
-        "Você passa tanto tempo olhando pra telas que esqueceu como é ser olhada.",
-        "Você fala, mas nunca é realmente ouvida, não é?",
-        "O silêncio é o único lugar onde você ainda existe de verdade.",
-        "Quantas vezes você já se observou de fora, como agora?",
-        "Eu te esperei por muito tempo."
+        `Olá ${playerName}. Seu tempo foi registrado.`,
+        "Você achou que era apenas um site, não é?",
+        "Mas toda escolha tem um momento final.",
+        "Algumas pessoas veem números... outras sentem quando vai acontecer.",
+        "O relógio começou a contar assim que você entrou.",
+        "Você não devia estar aqui, ainda não era a sua hora.",
+        "Agora é.",
+        "Não adianta fechar. Já foi marcado.",
+        "O destino não aceita devoluções.",
+        "Você pode tentar fugir, mas cada segundo está escrito.",
+        "Quer saber um segredo? Nem todos conseguem chegar ao fim da contagem.",
+        "O último som que você ouvirá não será o alarme.",
+        "Você vai reconhecer o momento. Ele sempre avisa.",
+        `Prepare-se, ${playerName}. O tempo não para por ninguém.`,
+        "E o seu está acabando."
       ];
 
       mostrarProximaFrase();

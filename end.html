@@ -16,23 +16,23 @@
     <div id="deathTimer" class="timer">
       <div class="timer-block">
         <div class="timer-value" id="years">00</div>
-        <div class="timer-label">YRS</div>
+        <div class="timer-label">ANO</div>
       </div>
       <div class="timer-block">
         <div class="timer-value" id="days">000</div>
-        <div class="timer-label">DAY</div>
+        <div class="timer-label">DIAS</div>
       </div>
       <div class="timer-block">
         <div class="timer-value" id="hours">00</div>
-        <div class="timer-label">HRS</div>
+        <div class="timer-label">HORAS</div>
       </div>
       <div class="timer-block">
         <div class="timer-value" id="minutes">00</div>
-        <div class="timer-label">MIN</div>
+        <div class="timer-label">MINUTOS</div>
       </div>
       <div class="timer-block">
         <div class="timer-value" id="seconds">00</div>
-        <div class="timer-label">SEC</div>
+        <div class="timer-label">SEGUNDOS</div>
       </div>
     </div>
 
@@ -92,18 +92,21 @@
 
     function gerarPremonicao() {
       const mensagens = [
-        "Evite escadas hoje.",
-        "Cuidado com o sinal verde.",
-        "Preste atenção no chuveiro.",
-        "A buzina pode ser o último som que você ouvirá.",
-        "Não confie no travesseiro.",
-        "O cheiro de gás não é coincidência.",
-        "A porta do elevador pode não abrir.",
-        "O reflexo no espelho não é seu.",
-        "Você vai ouvir meu nome antes de dormir.",
-        "O último gole pode ser o mais perigoso.",
-        "A luz do seu quarto acabou de piscar, não foi?",
-        "Você está sendo observado enquanto lê isso."
+        "Evite olhar para o relógio às 3:07.",
+        "O espelho mostrará mais do que seu reflexo hoje.",
+        "Cuidado com o som de passos atrás de você.",
+        "A água do chuveiro pode esconder algo frio.",
+        "Se o telefone tocar três vezes, não atenda.",
+        "O cheiro de metal é o aviso.",
+        "Não confie na calmaria antes da tempestade.",
+        "Alguém próximo a você já sentiu isso também.",
+        "Você sonhou com o fim antes mesmo de começar.",
+        "O último gole sempre vem com um gosto estranho.",
+        "Há um som que só você consegue ouvir agora.",
+        "A luz piscando não é falha elétrica.",
+        "Algo está esperando você desligar a tela.",
+        "Seu reflexo está demorando para se mover, não está?",
+        "Você vai entender o aviso quando for tarde demais."
       ];
 
       const aleatoria = mensagens[Math.floor(Math.random() * mensagens.length)];

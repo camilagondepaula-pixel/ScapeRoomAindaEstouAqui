@@ -1,95 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
-/* Base */
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
-  color: #e0e0e0;
+  background-color: black;
+  color: #fff;
   font-family: 'Special Elite', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   text-align: center;
-  overflow: hidden;
 }
 
-/* Container principal */
-.app-fake {
-  background: rgba(17, 17, 17, 0.85);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-  border-radius: 12px;
-  padding: 40px 30px;
-  max-width: 400px;
-  width: 90%;
-  animation: blink 0.5s infinite;
+.container {
+  padding: 20px;
+  max-width: 600px;
 }
 
-/* Título */
-.titulo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-  color: #ff4444;
-  letter-spacing: 1px;
-}
-
-/* Subtítulo */
-.intro {
-  font-size: 1rem;
-  margin-bottom: 20px;
-}
-
-/* Contador */
-.timer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.timer-block {
-  background-color: #1a1a1a;
-  border: 2px solid #ff4444;
-  border-radius: 8px;
-  padding: 10px 15px;
-  width: 80px;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
-}
-
-.timer-value {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.timer-label {
-  font-size: 0.9rem;
-  color: #ccc;
-  margin-top: 5px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* Traduções dos rótulos */
-.timer-label:nth-child(2):nth-of-type(1)::after { content: "ANO"; }
-.timer-label:nth-child(2):nth-of-type(2)::after { content: "DIAS"; }
-.timer-label:nth-child(2):nth-of-type(3)::after { content: "HORAS"; }
-.timer-label:nth-child(2):nth-of-type(4)::after { content: "MINUTOS"; }
-.timer-label:nth-child(2):nth-of-type(5)::after { content: "SEGUNDOS"; }
-
-/* Premonição */
-.premonition {
-  margin-top: 20px;
-  font-style: italic;
-  color: #ccc;
-  font-size: 1.1rem;
-  animation: fadeIn 1s ease-in;
+#mensagem {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  min-height: 100px;
+  transition: all 0.3s ease;
 }
 
 /* Botão */
@@ -102,47 +35,24 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #a00000;
 }
 
-/* Mensagem de cancelamento */
-.cancel-message {
-  margin-top: 30px;
-  font-size: 1.2rem;
-  color: #ff6666;
-  font-weight: bold;
-  transition: opacity 0.5s ease;
+/* Efeito de distorção */
+.glitch {
+  animation: glitchEffect 0.1s steps(2, end) infinite;
+  color: #ff4444;
+  text-shadow: 1px 0 red, -1px 0 cyan;
 }
 
-/* Efeitos visuais */
-.flash {
-  animation: flashRed 0.3s alternate infinite;
-}
-
-.flash-intensa {
-  animation: flashRedIntensa 0.2s alternate infinite;
-}
-
-@keyframes flashRed {
-  from { background-color: #0d0d0d; }
-  to { background-color: #330000; }
-}
-
-@keyframes flashRedIntensa {
-  from { background-color: #0d0d0d; }
-  to { background-color: red; }
-}
-
-@keyframes blink {
-  0%, 100% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); }
-  50% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.1); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes glitchEffect {
+  0% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0); }
 }
