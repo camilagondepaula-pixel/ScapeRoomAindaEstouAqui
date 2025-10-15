@@ -1,6 +1,6 @@
-/* Tipografia cinematográfica */
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Special+Elite&display=swap');
 
+/* Base */
 body {
   margin: 0;
   padding: 0;
@@ -15,9 +15,9 @@ body {
   overflow: hidden;
 }
 
-/* Layout moderno */
+/* Container principal */
 .app-fake {
-  background: rgba(17, 17, 17, 0.8);
+  background: rgba(17, 17, 17, 0.85);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
@@ -28,22 +28,28 @@ body {
   animation: blink 0.5s infinite;
 }
 
-/* Título do app */
-h1 {
-  font-family: 'Unbounded', sans-serif;
+/* Título */
+.titulo {
+  font-family: 'Orbitron', sans-serif;
   font-size: 2.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #ff4444;
   letter-spacing: 1px;
 }
 
-/* Contador estilo filme */
+/* Subtítulo */
+.intro {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Contador */
 .timer {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 20px;
+  justify-content: center;
   gap: 10px;
+  margin-bottom: 30px;
 }
 
 .timer-block {
@@ -51,13 +57,14 @@ h1 {
   border: 2px solid #ff4444;
   border-radius: 8px;
   padding: 10px 15px;
-  width: 48%;
+  width: 80px;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
 }
 
 .timer-value {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #fff;
 }
 
@@ -69,14 +76,14 @@ h1 {
 
 /* Premonição */
 .premonition {
-  margin-top: 30px;
+  margin-top: 20px;
   font-style: italic;
   color: #ccc;
   font-size: 1.1rem;
   animation: fadeIn 1s ease-in;
 }
 
-/* Botão cancelar */
+/* Botão */
 button {
   margin-top: 30px;
   padding: 10px 20px;
@@ -102,7 +109,7 @@ button:hover {
   transition: opacity 0.5s ease;
 }
 
-/* Luz piscando */
+/* Efeitos visuais */
 .flash {
   animation: flashRed 0.3s alternate infinite;
 }

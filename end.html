@@ -2,15 +2,15 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Countdown</title>
+  <title>A Hora da Sua Morte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="flash">
   <div class="app-fake">
-    <h1>⏳ Countdown</h1>
-    <p>Você morrerá em:</p>
+    <h1 class="titulo">A Hora da Sua Morte</h1>
+    <p class="intro">Você morrerá em:</p>
 
     <!-- Contador estilo filme -->
     <div id="deathTimer" class="timer">
@@ -19,7 +19,7 @@
         <div class="timer-label">YRS</div>
       </div>
       <div class="timer-block">
-        <div class="timer-value" id="days">00</div>
+        <div class="timer-value" id="days">000</div>
         <div class="timer-label">DAY</div>
       </div>
       <div class="timer-block">
@@ -45,14 +45,12 @@
   </div>
 
   <script>
-    // Bloqueia tentativa de saída
     window.onbeforeunload = function () {
       return "Você não pode sair agora. O tempo está correndo.";
     };
 
-    // Gera tempo aleatório
     function gerarTempoAleatorio() {
-      const anos = Math.floor(Math.random() * 2); // até 1 ano
+      const anos = Math.floor(Math.random() * 2);
       const dias = Math.floor(Math.random() * 365);
       const horas = Math.floor(Math.random() * 24);
       const minutos = Math.floor(Math.random() * 60);
@@ -67,7 +65,6 @@
       );
     }
 
-    // Atualiza contador estilo filme
     function atualizarContador(segundosTotais) {
       const years = Math.floor(segundosTotais / (365 * 24 * 60 * 60));
       segundosTotais %= (365 * 24 * 60 * 60);
@@ -79,13 +76,12 @@
       const seconds = segundosTotais % 60;
 
       document.getElementById("years").textContent = String(years).padStart(2, '0');
-      document.getElementById("days").textContent = String(days).padStart(2, '0');
+      document.getElementById("days").textContent = String(days).padStart(3, '0');
       document.getElementById("hours").textContent = String(hours).padStart(2, '0');
       document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
       document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
     }
 
-    // Inicia contagem regressiva
     function iniciarContagem(segundos) {
       atualizarContador(segundos);
       setInterval(() => {
@@ -94,13 +90,12 @@
       }, 1000);
     }
 
-    // Gera premonição aleatória
     function gerarPremonicao() {
       const mensagens = [
+        "Evite escadas hoje.",
         "Cuidado com o sinal verde.",
         "Preste atenção no chuveiro.",
         "A buzina pode ser o último som que você ouvirá.",
-        "Evite escadas hoje.",
         "Não confie no travesseiro.",
         "O cheiro de gás não é coincidência.",
         "A porta do elevador pode não abrir.",
@@ -115,7 +110,6 @@
       document.getElementById("premonition").textContent = aleatoria;
     }
 
-    // Tentar cancelar destino
     function tentarCancelar() {
       const btn = document.getElementById("cancelBtn");
       const msg = document.getElementById("cancelMessage");
@@ -126,7 +120,6 @@
       document.body.classList.add("flash-intensa");
     }
 
-    // Inicia tudo ao carregar
     window.onload = () => {
       const tempoInicial = gerarTempoAleatorio();
       iniciarContagem(tempoInicial);
