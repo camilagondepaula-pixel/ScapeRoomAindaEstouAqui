@@ -41,12 +41,14 @@ body {
   color: #ff3b3b;
   letter-spacing: 1.2px;
   text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 .intro {
   font-size: 0.95rem;
   color: #cfcfcf;
   margin: 0 0 22px 0;
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 /* ===== Contador ===== */
@@ -72,6 +74,7 @@ body {
   font-weight: 700;
   line-height: 1;
   color: #ffffff;
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 .timer-label {
@@ -81,6 +84,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.6px;
   text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 /* ===== Premonição ===== */
@@ -91,11 +95,30 @@ body {
   color: #ccc;
   margin-top: 20px;
   line-height: 1.4;
+  opacity: 0;
+  animation: aparecer 0.4s ease-out forwards;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Efeito para "Agora é." ===== */
+.piscar-vermelho {
+  color: #ff3b3b;
+  animation: piscar 0.6s infinite alternate;
+}
+
+@keyframes piscar {
+  from { opacity: 1; }
+  to   { opacity: 0.2; }
 }
 
 /* ===== Botão ===== */
 button,
-#cancelBtn {
+#cancelBtn,
+#startBtn {
   margin-top: 26px;
   padding: 12px 20px;
   font-size: 1rem;
@@ -107,17 +130,20 @@ button,
   transition: transform 0.08s ease, box-shadow 0.25s ease, background 0.25s ease;
   text-transform: uppercase;
   letter-spacing: 0.8px;
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 button:hover,
-#cancelBtn:hover {
+#cancelBtn:hover,
+#startBtn:hover {
   background: linear-gradient(180deg, #b00000, #8a0000);
   box-shadow: 0 0 18px rgba(255, 0, 0, 0.35);
   transform: translateY(-1px);
 }
 
 button:active,
-#cancelBtn:active {
+#cancelBtn:active,
+#startBtn:active {
   transform: translateY(0);
 }
 
@@ -151,17 +177,6 @@ button:active,
   to   { background-color: #b30000; }
 }
 
-/* ===== Efeito para "Agora é." ===== */
-.piscar-vermelho {
-  color: #ff3b3b;
-  animation: piscar 0.6s infinite alternate;
-}
-
-@keyframes piscar {
-  from { opacity: 1; }
-  to   { opacity: 0.2; }
-}
-
 /* ===== Responsividade ===== */
 @media (max-width: 380px) {
   .app-fake {
@@ -181,13 +196,4 @@ button:active,
   .titulo {
     font-size: 2rem;
   }
-}
-
-/* ===== Força Orbitron no contador ===== */
-.timer-value,
-.timer-label,
-.titulo,
-.intro,
-button {
-  font-family: 'Orbitron', sans-serif !important;
 }

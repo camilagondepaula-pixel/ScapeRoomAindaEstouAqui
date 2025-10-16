@@ -10,43 +10,47 @@
 <body class="flash">
   <div class="app-fake">
     <h1 class="titulo">A Hora da Sua Morte</h1>
-    <p class="intro">Você morrerá em:</p>
+    <p class="intro">Você está prestes a descobrir o momento final.</p>
 
-    <div id="deathTimer" class="timer">
-      <div class="timer-block">
-        <div class="timer-value" id="years">00</div>
-        <div class="timer-label">ANO</div>
+    <!-- Botão de entrada -->
+    <button id="startBtn">Aceitar destino</button>
+
+    <!-- Conteúdo oculto até clicar -->
+    <div id="conteudoFinal" style="display:none;">
+      <p class="intro">Você morrerá em:</p>
+
+      <div id="deathTimer" class="timer">
+        <div class="timer-block">
+          <div class="timer-value" id="years">00</div>
+          <div class="timer-label">ANO</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-value" id="days">000</div>
+          <div class="timer-label">DIAS</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-value" id="hours">00</div>
+          <div class="timer-label">HORAS</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-value" id="minutes">00</div>
+          <div class="timer-label">MINUTOS</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-value" id="seconds">00</div>
+          <div class="timer-label">SEGUNDOS</div>
+        </div>
       </div>
-      <div class="timer-block">
-        <div class="timer-value" id="days">000</div>
-        <div class="timer-label">DIAS</div>
-      </div>
-      <div class="timer-block">
-        <div class="timer-value" id="hours">00</div>
-        <div class="timer-label">HORAS</div>
-      </div>
-      <div class="timer-block">
-        <div class="timer-value" id="minutes">00</div>
-        <div class="timer-label">MINUTOS</div>
-      </div>
-      <div class="timer-block">
-        <div class="timer-value" id="seconds">00</div>
-        <div class="timer-label">SEGUNDOS</div>
-      </div>
+
+      <p id="premonition" class="premonition"></p>
+
+      <audio id="glitchSound" src="glitch.mp3" preload="auto"></audio>
+      <button id="cancelBtn">Tentar cancelar</button>
+      <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
     </div>
-
-    <p id="premonition" class="premonition"></p>
-
-    <audio id="glitchSound" src="glitch.mp3" preload="auto"></audio>
-    <button id="cancelBtn">Tentar cancelar</button>
-    <p id="cancelMessage" class="cancel-message" style="display:none;"></p>
   </div>
 
   <script>
-    window.onbeforeunload = function () {
-      return "Você não pode sair agora. O tempo está correndo.";
-    };
-
     const frases = [
       "Olá ${playerName}. Seu tempo foi registrado.",
       "Você achou que era apenas um site, não é?",
@@ -69,14 +73,7 @@
       const horas = Math.floor(Math.random() * 24);
       const minutos = Math.floor(Math.random() * 60);
       const segundos = Math.floor(Math.random() * 60);
-
-      return (
-        (anos * 365 * 24 * 60 * 60) +
-        (dias * 24 * 60 * 60) +
-        (horas * 60 * 60) +
-        (minutos * 60) +
-        segundos
-      );
+      return (anos * 365 * 24 * 60 * 60) + (dias * 24 * 60 * 60) + (horas * 60 * 60) + (minutos * 60) + segundos;
     }
 
     function atualizarContador(segundosTotais) {
@@ -126,15 +123,10 @@
 
     function tocarGlitch() {
       const audio = document.getElementById("glitchSound");
-      if (audio.readyState >= 2) {
-        audio.play().catch(() => {
-          console.warn("O navegador bloqueou o som.");
-        });
-      } else {
-        audio.addEventListener("canplaythrough", () => {
-          audio.play().catch(() => {});
-        }, { once: true });
-      }
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        console.warn("O navegador bloqueou o som. Interaja com a página primeiro.");
+      });
     }
 
     document.getElementById("cancelBtn").addEventListener("click", () => {
@@ -152,10 +144,17 @@
       document.body.classList.add("flash-intensa");
     }
 
-    window.onload = () => {
+    document.getElementById("startBtn").addEventListener("click", () => {
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("conteudoFinal").style.display = "block";
       const tempoInicial = gerarTempoAleatorio();
       iniciarContagem(tempoInicial);
       gerarPremonicao();
+      tocarGlitch(); // desbloqueia som
+    });
+
+    window.onbeforeunload = function () {
+      return "Você não pode sair agora. O tempo está correndo.";
     };
   </script>
 </body>
